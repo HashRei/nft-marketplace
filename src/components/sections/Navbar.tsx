@@ -75,7 +75,7 @@ export function Navbar() {
       {/* MOBILE NAVBAR */}
 
       <div className=" fixed flex-col w-full items-center space-y-3 flex justify-between desktop:hidden ">
-        <div className="tablet:flex tablet:justify-around tablet:w-full">
+        <div className="inline-flex tablet:flex justify-around w-full">
           <div className="flex p-2 space-x-3">
             {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
             <Image
@@ -84,7 +84,7 @@ export function Navbar() {
               width={"40px"}
               height={"40px"}
             />
-            <p className="font-bold text-4xl">LooksSea</p>
+            <p className="hidden tablet:flex font-bold text-4xl">LooksSea</p>
           </div>
 
           <div className=" inline-flex">
