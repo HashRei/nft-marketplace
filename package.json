@@ -30,6 +30,7 @@
     "next": "12",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-icons": "^4.3.1",
     "styled-components": "^5.3.5",
     "ts-node": "^10.7.0",
     "typechain": "^8.0.0",
