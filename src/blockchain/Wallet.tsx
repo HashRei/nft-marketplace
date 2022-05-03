@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import Image from "next/image";
 
 let web3Modal: Web3Modal;
+
+interface WalletProps {
+  isMobile: boolean;
+}
 
 const providerOptions = {
   walletconnect: {
@@ -21,7 +27,7 @@ if (typeof window !== "undefined") {
   });
 }
 
-export function Wallet() {
+export function Wallet({ isMobile }: WalletProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [hasMetamask, setHasMetamask] = useState(false);
   // const [signer, setSigner] = useState(undefined);
@@ -47,28 +53,66 @@ export function Wallet() {
     }
   }
   return (
-    <div className="mr-3">
-      {hasMetamask ? (
-        isConnected ? (
-          <button className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans mt-2">
-            Connected
-          </button>
-        ) : (
-          <button
-            className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans mt-2"
-            onClick={() => connect()}
-          >
-            Connect your wallet
-          </button>
-        )
+    <>
+      {isMobile ? (
+        <div className="mr-3 mt-2">
+          {hasMetamask ? (
+            isConnected ? (
+              <button className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans">
+                Connected
+                {/* Add the Metamask rpofil icon here */}
+              </button>
+            ) : (
+              <button
+                className="disabled:opacity-70  disabled:cursor-not-allowed py-2"
+                onClick={() => connect()}
+              >
+                <AccountBalanceWalletIcon />
+              </button>
+            )
+          ) : (
+            <button
+              className="disabled:opacity-70  disabled:cursor-not-allowed"
+              onClick={() =>
+                window.open("https://metamask.io/download", "_blank")
+              }
+            >
+              <Image
+                src="/MetaMask_Fox.svg"
+                alt="MetaMask_Fox logo"
+                width={"40px"}
+                height={"40px"}
+              />
+            </button>
+          )}
+        </div>
       ) : (
-        <button
-          className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans mt-2"
-          onClick={() => window.open("https://metamask.io/download", "_blank")}
-        >
-          Install Metamask
-        </button>
+        <div className="mr-3 mt-2">
+          {hasMetamask ? (
+            isConnected ? (
+              <button className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans">
+                Connected
+              </button>
+            ) : (
+              <button
+                className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans"
+                onClick={() => connect()}
+              >
+                Connect your wallet
+              </button>
+            )
+          ) : (
+            <button
+              className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans"
+              onClick={() =>
+                window.open("https://metamask.io/download", "_blank")
+              }
+            >
+              Install Metamask
+            </button>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }
