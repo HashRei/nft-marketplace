@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import { IoMdWallet } from "react-icons/io";
 import Image from "next/image";
 
 let web3Modal: Web3Modal;
@@ -55,7 +55,7 @@ export function Wallet({ isMobile }: WalletProps) {
   return (
     <>
       {isMobile ? (
-        <div className="mr-3 mt-2">
+        <div>
           {hasMetamask ? (
             isConnected ? (
               <button className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans">
@@ -64,10 +64,10 @@ export function Wallet({ isMobile }: WalletProps) {
               </button>
             ) : (
               <button
-                className="disabled:opacity-70  disabled:cursor-not-allowed py-2"
+                className="disabled:opacity-70  disabled:cursor-not-allowed"
                 onClick={() => connect()}
               >
-                <AccountBalanceWalletIcon />
+                <IoMdWallet size="34" />
               </button>
             )
           ) : (

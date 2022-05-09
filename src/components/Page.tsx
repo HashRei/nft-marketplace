@@ -7,7 +7,7 @@ interface PageProps {
 
 export function Page({ children }: PageProps) {
   return (
-    <div className=" bg-gray-900 text-white">
+    <div>
       <Head>
         <title>LooksSea | NFTMarketplace</title>
         <meta name="description" content="LooksSea - NFTMarketplace" />

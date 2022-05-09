@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
+import { DarkModeButton } from "../utils/DarkModeButton";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -33,7 +34,7 @@ export function Navbar() {
     <section>
       {/* DESKTOP NAVBAR */}
 
-      <div className=" hidden desktop:flex fixed flex-col w-full items-center space-y-3 desktop:flex-row justify-between  ">
+      <div className=" hidden desktop:flex fixed flex-col w-full items-center space-y-3 desktop:flex-row justify-between">
         <div className="flex p-2 space-x-3">
           {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
           <Image
@@ -69,12 +70,14 @@ export function Navbar() {
         <NavbarButton text="My collection" path="/" />
         <NavbarButton text="Mint and sell" path="/" />
 
+        <DarkModeButton />
+
         <Wallet isMobile={false} />
       </div>
 
       {/* MOBILE NAVBAR */}
 
-      <div className=" fixed flex-col w-full items-center space-y-3 flex justify-between desktop:hidden ">
+      <div className=" fixed flex-col w-full flex justify-between desktop:hidden ">
         <div className="inline-flex tablet:flex justify-around w-full">
           <div className="flex p-2 space-x-3">
             {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
@@ -87,16 +90,17 @@ export function Navbar() {
             <p className="hidden tablet:flex font-bold text-4xl">LooksSea</p>
           </div>
 
-          <div className=" inline-flex">
+          <div className="inline-flex items-center space-x-4">
+            <DarkModeButton />
             <Wallet isMobile={true} />
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="item-center justify-center"
-            >
+            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               {isMobileMenuOpen ? (
-                <TemporaryDrawer />
+                <>
+                  <TemporaryDrawer />
+                  <AiOutlineMenu className="-mt-1" size="36" />
+                </>
               ) : (
-                <AiOutlineMenu color="black" size="28" />
+                <AiOutlineMenu className="-mt-1" size="36" /> // -mt-1 is there to align this icon with the others
               )}
             </button>
           </div>
