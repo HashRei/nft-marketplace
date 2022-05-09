@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -135,7 +136,7 @@ export default function TemporaryDrawer() {
     };
 
   const list = () => (
-    <Box onClick={toggleDrawer(false)}>
+    <Box>
       <List>
         {["My collection", "Mint and sell"].map((text, index) => (
           <ListItem button key={text}>
@@ -149,12 +150,33 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         {["Github", "Twitter"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <GitHubIcon /> : <TwitterIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+          <ListItemButton key={text}>
+            {index === 0 ? (
+              <button
+                className="inline-flex"
+                onClick={() =>
+                  window.open("https://github.com/HashRei", "_blank")
+                }
+              >
+                <ListItemIcon>
+                  <GitHubIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </button>
+            ) : (
+              <button
+                className="inline-flex"
+                onClick={() =>
+                  window.open("https://twitter.com/HashRei_", "_blank")
+                }
+              >
+                <ListItemIcon>
+                  <TwitterIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </button>
+            )}
+          </ListItemButton>
         ))}
       </List>
     </Box>
