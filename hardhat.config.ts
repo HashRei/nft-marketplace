@@ -1,5 +1,6 @@
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
+import "@typechain/hardhat";
 import fs from "fs";
 
 const mnemonic = fs.existsSync("../mnemonic")
@@ -11,7 +12,7 @@ if (!mnemonic) console.log("Missing mnemonic");
  * @type import('hardhat/config').HardhatUserConfig
  */
 
-module.exports =  {
+module.exports = {
   solidity: {
     version: "0.8.4",
     settings: {
