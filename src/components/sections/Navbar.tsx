@@ -35,7 +35,7 @@ export function Navbar() {
     <section>
       {/* DESKTOP NAVBAR */}
 
-      <div className=" hidden desktop:flex fixed flex-col w-full items-center space-y-3 desktop:flex-row justify-between">
+      <div className=" hidden desktop:flex flex-col w-full items-center space-y-3 desktop:flex-row justify-between">
         <div className="flex p-2 space-x-3">
           {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
           <Image
