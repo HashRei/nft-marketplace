@@ -1,8 +1,9 @@
-import Head from 'next/head'
-import React, { ReactNode } from 'react'
+import Head from "next/head";
+import React, { ReactNode } from "react";
+import { Navbar } from "./sections/Navbar";
 
 interface PageProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function Page({ children }: PageProps) {
@@ -11,9 +12,10 @@ export function Page({ children }: PageProps) {
       <Head>
         <title>LooksSea | NFTMarketplace</title>
         <meta name="description" content="LooksSea - NFTMarketplace" />
-        <link rel="icon" href="/Logo_LooksSea.png"/>
+        <link rel="icon" href="/Logo_LooksSea.png" />
       </Head>
+      <Navbar />
       {children}
     </div>
-  )
+  );
 }

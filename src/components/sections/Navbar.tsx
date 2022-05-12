@@ -32,7 +32,7 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <section>
+    <div>
       {/* DESKTOP NAVBAR */}
 
       <div className=" hidden desktop:flex flex-col w-full items-center space-y-3 desktop:flex-row justify-between">
@@ -69,7 +69,7 @@ export function Navbar() {
         </div>
 
         <NavbarButton text="My collection" path="/" />
-        <NavbarButton text="Mint and sell" path="/" />
+        <NavbarButton text="Mint and buy" path="/MintMarketplacePage" />
 
         <DarkModeButton />
 
@@ -107,7 +107,7 @@ export function Navbar() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -138,7 +138,7 @@ export default function TemporaryDrawer() {
   const list = () => (
     <Box>
       <List>
-        {["My collection", "Mint and sell"].map((text, index) => (
+        {["My collection", "Mint and buy"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <CollectionsIcon /> : <SwapHorizIcon />}
