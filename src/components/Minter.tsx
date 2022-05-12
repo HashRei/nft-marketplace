@@ -23,6 +23,7 @@ const client = ipfsHttpClient("https://ipfs.infura.io:5001"); // This works chec
 import { marketplaceAddress } from "../../config";
 
 import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
+import { Page } from "./Page";
 
 interface Inputs {
   nftName: string;
@@ -31,7 +32,7 @@ interface Inputs {
   nftFile: File;
 }
 
-export default function MintPage() {
+export default function Minter() {
   const {
     register,
     handleSubmit,
@@ -121,12 +122,14 @@ export default function MintPage() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div
+      className="flex justify-center items-center h-screen"
+      // style={{ height: "70vh" }}
+    >
       <form
         className="mt-16 flex flex-col space-y-3 tablet:w-1/2 p-4 desktop:-mt-10 bg-slate-300 rounded-lg bg-gradient-to-tr from-violet-500 to-fuchsia-500 "
         onSubmit={handleSubmit(onSubmit)}
       >
-        
         <input
           type="text"
           placeholder="NFT name"
@@ -159,21 +162,23 @@ export default function MintPage() {
         />
         {errors.nftPrice && <p>Price must be at least 1</p>}
 
-        <input type="file" {...register("nftFile", { required: true })} onChange={onChange} />
+        <input
+          type="file"
+          {...register("nftFile", { required: true })}
+          onChange={onChange}
+        />
         {errors?.nftFile?.type === "required" && (
           <p>Adding a file is required</p>
         )}
-          {
-          fileUrl && (
-            <Image
-              className="rounded"
-              src={fileUrl}
-              alt="NFT file"
-              width={"350px"}
-              height={"350px"}
-            />
-          )
-        }
+        {fileUrl && (
+          <Image
+            className="rounded"
+            src={fileUrl}
+            alt="NFT file"
+            width={"350px"}
+            height={"350px"}
+          />
+        )}
         <button
           type="submit"
           className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600"
