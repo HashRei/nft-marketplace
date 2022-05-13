@@ -23,7 +23,6 @@ const client = ipfsHttpClient("https://ipfs.infura.io:5001"); // This works chec
 import { marketplaceAddress } from "../../config";
 
 import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
-import { Page } from "./Page";
 
 interface Inputs {
   nftName: string;
@@ -69,7 +68,7 @@ export default function Minter() {
     nftFile,
   }: Inputs) {
     if (!nftName || !nftDescription || !nftPrice || !nftFile) return;
-    /* first, upload to IPFS */
+    // First, upload to IPFS
     const data = JSON.stringify({
       nftName,
       nftDescription,
@@ -78,7 +77,7 @@ export default function Minter() {
     try {
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      /* after file is uploaded to IPFS, return the URL to use it in the transaction */
+      // After file is uploaded to IPFS, return the URL to use it in the transaction
       return url;
     } catch (error) {
       console.log("Error uploading file: ", error);
@@ -122,10 +121,7 @@ export default function Minter() {
   }
 
   return (
-    <div
-      className="flex justify-center items-center h-screen"
-      // style={{ height: "70vh" }}
-    >
+    <div className="flex justify-center items-center h-screen">
       <form
         className="mt-16 flex flex-col space-y-3 tablet:w-1/2 p-4 desktop:-mt-10 bg-slate-300 rounded-lg bg-gradient-to-tr from-violet-500 to-fuchsia-500 "
         onSubmit={handleSubmit(onSubmit)}
@@ -133,7 +129,7 @@ export default function Minter() {
         <input
           type="text"
           placeholder="NFT name"
-          className="p-6 rounded"
+          className="p-5 rounded"
           {...register("nftName", {
             required: true,
             maxLength: 20,
@@ -147,7 +143,7 @@ export default function Minter() {
         <input
           type="text"
           placeholder="NFT Description"
-          className="p-6 rounded"
+          className="p-5 rounded"
           {...register("nftDescription", { maxLength: 200 })}
         />
         {errors?.nftDescription?.type === "maxLength" && (
@@ -157,7 +153,7 @@ export default function Minter() {
         <input
           type="number"
           placeholder="0.000"
-          className="p-6 rounded"
+          className="p-5 rounded"
           {...register("nftPrice", { required: true, min: 1 })}
         />
         {errors.nftPrice && <p>Price must be at least 1</p>}
@@ -166,18 +162,24 @@ export default function Minter() {
           type="file"
           {...register("nftFile", { required: true })}
           onChange={onChange}
+          accept="image/*" //TODO Only accept images for now
+          // accept="image/*,video/*,audio/*,.glb,.gltf"
         />
         {errors?.nftFile?.type === "required" && (
           <p>Adding a file is required</p>
         )}
         {fileUrl && (
-          <Image
-            className="rounded"
-            src={fileUrl}
-            alt="NFT file"
-            width={"350px"}
-            height={"350px"}
-          />
+          <div className="rounded-lg mx-auto">
+            <Image
+              className="rounded"
+              src={fileUrl}
+              alt="NFT file"
+              width={350}
+              height={257}
+              objectFit="cover"
+              quality={100}
+            />
+          </div>
         )}
         <button
           type="submit"
