@@ -107,8 +107,10 @@ export default function Marketplace() {
                 className="rounded"
                 src={nft.image} // TODO At some point the image prop is empty so it generates an issue
                 alt="NFT file"
-                width={"350px"}
-                height={"350px"}
+                width={350}
+                height={257}
+                objectFit="cover"
+                quality={100}
               />
               <div className="p-4">
                 <p
