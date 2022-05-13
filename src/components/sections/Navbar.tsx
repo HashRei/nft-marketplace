@@ -43,6 +43,7 @@ export function Navbar() {
             alt="LooksSea logo"
             width={"40px"}
             height={"40px"}
+            quality={100}
           />
           <p className="font-bold text-4xl">LooksSea</p>
         </div>
@@ -68,7 +69,7 @@ export function Navbar() {
           </Paper>
         </div>
 
-        <NavbarButton text="My collection" path="/" />
+        <NavbarButton text="My collection" path="/MyCollectionPage" />
         <NavbarButton text="Mint and buy" path="/MintMarketplacePage" />
 
         <DarkModeButton />
@@ -78,7 +79,7 @@ export function Navbar() {
 
       {/* MOBILE NAVBAR */}
 
-      <div className=" fixed flex-col w-full flex justify-between desktop:hidden ">
+      <div className=" flex flex-col w-full  justify-between desktop:hidden ">
         <div className="inline-flex tablet:flex justify-around w-full">
           <div className="flex p-2 space-x-3">
             {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
