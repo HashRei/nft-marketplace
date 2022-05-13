@@ -70,7 +70,7 @@ export function Navbar() {
         </div>
 
         <NavbarButton text="My collection" path="/MyCollectionPage" />
-        <NavbarButton text="Mint and buy" path="/MintMarketplacePage" />
+        <NavbarButton text="Create an NFT" path="/MinterPage" />
 
         <DarkModeButton />
 

@@ -117,7 +117,7 @@ export default function Minter() {
     });
     await transaction.wait();
 
-    router.push("/"); // reroute the user to the main page
+    router.push("/MarketplacePage"); // reroute the user to the marketplace page
   }
 
   return (
