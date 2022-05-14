@@ -37,7 +37,7 @@ contract NFTMarketplace is ERC721URIStorage {
 
     /** CONSTRUCTOR **/
     constructor() ERC721("LooksSea Tokens", "LSEAT") {
-        listingPrice = 1 ether; // This unit is in MATIC tokens
+        listingPrice = 0.003 ether; // This unit is in MATIC tokens
         owner = payable(msg.sender);
     }
 
@@ -73,7 +73,7 @@ contract NFTMarketplace is ERC721URIStorage {
     }
 
     function createMarketItem(uint256 _tokenId, uint256 _price) private {
-        require(_price > 1, "Price must be at least 1 Matic");
+        require(_price > 0, "Price must be at least 1 wei");
         require(
             msg.value == listingPrice,
             "Price must be equal to listing price"

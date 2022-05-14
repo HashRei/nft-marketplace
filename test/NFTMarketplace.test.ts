@@ -18,10 +18,10 @@ beforeEach(async function () {
   listingPrice = await nftMarketplace.getListingPrice();
   listingPrice = listingPrice.toString();
 
-  auctionPrice = ethers.utils.parseUnits("1", "ether"); // The actual price is in MATIC
+  auctionPrice = ethers.utils.parseUnits("0.003", "ether"); // The actual price is in MATIC
 
   // Checks
-  expect(listingPrice).to.equal(ethers.utils.parseUnits("1", "ether"));
+  expect(listingPrice).to.equal(ethers.utils.parseUnits("0.003", "ether"));
   expect(nftMarketplace.address).to.not.equal(ethers.constants.AddressZero);
 });
 
