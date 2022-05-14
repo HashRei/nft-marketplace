@@ -47,14 +47,14 @@ export function Navbar() {
           />
           <p className="font-bold text-4xl">LooksSea</p>
         </div>
-        <div className="display-mobile">
+        <div className="">
           <Paper
             component="form"
             sx={{
               p: "2px 4px",
               display: "flex",
               alignItems: "center",
-              width: 600,
+              width: 400,
             }}
           >
             <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
@@ -69,8 +69,9 @@ export function Navbar() {
           </Paper>
         </div>
 
-        <NavbarButton text="My collection" path="/MyCollectionPage" />
         <NavbarButton text="Create an NFT" path="/MinterPage" />
+        <NavbarButton text="Marketplace" path="/MarketplacePage" />
+        <NavbarButton text="My collection" path="/MyCollectionPage" />
 
         <DarkModeButton />
 
