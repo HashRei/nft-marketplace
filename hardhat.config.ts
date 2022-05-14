@@ -3,10 +3,15 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import fs from "fs";
 
-const mnemonic = fs.existsSync("../mnemonic")
-  ? fs.readFileSync("../mnemonic", "utf-8").trim()
-  : "";
-if (!mnemonic) console.log("Missing mnemonic");
+const privateKey = fs.existsSync("../secret.txt")
+? fs.readFileSync("../secret.txt", "utf-8").trim()
+: "";
+if (!privateKey) console.log("Missing private key");
+
+const infuraProjetId = fs.existsSync(".infuraprojetid")
+? fs.readFileSync(".infuraprojetid", "utf-8").trim()
+: "";
+if (!infuraProjetId) console.log("Missing infura project id");
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -22,24 +27,21 @@ module.exports = {
       },
     },
   },
-  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       chainId: 1337,
     },
     mainnet: {
-      url: "https://polygon-mainnet.infura.io/v3/a0cad0782a1f452dbc631e10854244ea",
+      url: `https://polygon-mainnet.infura.io/v3/${infuraProjetId}`,
       chainId: 137,
-      accounts: {
-        mnemonic,
-      },
+      gasPrice: 50000000000,
+      accounts: [privateKey]
     },
     mumbai: {
-      url: "https://polygon-mumbai.infura.io/v3/a0cad0782a1f452dbc631e10854244ea",
+      url: `https://polygon-mumbai.infura.io/v3/${infuraProjetId}`,
       chainId: 80001,
-      accounts: {
-        mnemonic,
-      },
+      gasPrice: 14000000000,
+      accounts: [privateKey],
     },
   },
 };
