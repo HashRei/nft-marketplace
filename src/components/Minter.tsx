@@ -21,7 +21,6 @@ import Image from "next/image";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001"); // This works check https://www.npmjs.com/package/ipfs-http-client
 
-
 interface Inputs {
   nftName: string;
   nftDescription: string;
@@ -42,7 +41,7 @@ export default function Minter() {
 
   const [fileUrl, setFileUrl] = useState("");
   const router = useRouter();
-  const web3reactContext = useWeb3React(); 
+  const web3reactContext = useWeb3React();
 
   // Function for creating and updating the file url
   async function onChange(e: any) {
@@ -97,19 +96,26 @@ export default function Minter() {
       nftFile,
     });
 
+    if (web3reactContext.active === true) {
+      // Create the item
+      const price = ethers.utils.parseUnits(String(nftPrice), "ether");
+      let contract = getContract(
+        web3reactContext.library,
+        web3reactContext.account
+      );
 
-    // Create the item
-    const price = ethers.utils.parseUnits(String(nftPrice), "ether");
-    let contract = getContract(web3reactContext.library, web3reactContext.account)
+      let listingPrice = await contract.getListingPrice();
+      listingPrice = listingPrice.toString();
+      let transaction = await contract.createToken(url, price, {
+        value: listingPrice,
+      });
+      await transaction.wait();
 
-    let listingPrice = await contract.getListingPrice();
-    listingPrice = listingPrice.toString();
-    let transaction = await contract.createToken(url, price, {
-      value: listingPrice,
-    });
-    await transaction.wait();
-
-    router.push("/MarketplacePage"); // reroute the user to the marketplace page
+      router.push("/MarketplacePage"); // reroute the user to the marketplace page
+    } else {
+      console.log("Please connect your metamask");
+      //TODO Add Toastify event
+    }
   }
 
   return (

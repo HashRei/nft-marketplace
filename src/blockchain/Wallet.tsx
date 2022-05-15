@@ -11,11 +11,14 @@ interface WalletProps {
 
 export function Wallet({ isMobile }: WalletProps) {
   const [hasMetamask, setHasMetamask] = useState(false);
-  const { active, activate, deactivate } = useWeb3React();
+  const { active, activate, deactivate,  } = useWeb3React();
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
       setHasMetamask(true);
+    }
+    if(active === false && localStorage.getItem('isWalletconnected') === 'true'){
+      activate(injected);
     }
   }, []);
 
@@ -23,6 +26,7 @@ export function Wallet({ isMobile }: WalletProps) {
     if (typeof window.ethereum !== "undefined") {
       try {
         await activate(injected);
+        localStorage.setItem('isWalletconnected', 'true')
       } catch (e) {
         console.log(e);
       }
@@ -33,6 +37,7 @@ export function Wallet({ isMobile }: WalletProps) {
     if (typeof window.ethereum !== "undefined") {
       try {
         await deactivate();
+        localStorage.setItem('isWalletconnected', 'false')
       } catch (e) {
         console.log(e);
       }
