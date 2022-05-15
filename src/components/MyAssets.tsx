@@ -1,34 +1,27 @@
 import { ethers } from "ethers";
+import { getContract } from "../helper/contract";
+import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
 import Image from "next/image";
-
-import { marketplaceAddress } from "../../config";
-
-import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
 export default function MyAssets() {
   const [nfts, setNfts] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   const router = useRouter();
+  const web3reactContext = useWeb3React();
+
   useEffect(() => {
     loadNFTs();
   }, []);
+
   async function loadNFTs() {
-    const web3Modal = new Web3Modal({
-      network: "mainnet",
-      cacheProvider: true,
-    });
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const marketplaceContract = new ethers.Contract(
-      marketplaceAddress,
-      NFTMarketplace.abi,
-      signer
+    const marketplaceContract = getContract(
+      web3reactContext.library,
+      web3reactContext.account
     );
+
     const data = await marketplaceContract.fetchMyNFTs();
 
     const items = await Promise.all(

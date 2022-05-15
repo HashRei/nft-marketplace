@@ -1,16 +1,16 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Web3Modal from "web3modal";
+
 import Image from "next/image";
 
-import { marketplaceAddress } from "../../config";
-
-import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
+import { getContract } from "../helper/contract";
+import { useWeb3React } from "@web3-react/core";
 
 export default function Marketplace() {
   const [nfts, setNfts] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
+  const web3reactContext = useWeb3React();
   // const [nftCreation, setNftCreation] = useState(false);
 
   useEffect(() => {
@@ -32,12 +32,9 @@ export default function Marketplace() {
   // }
 
   async function loadNFTs() {
-    /* create a generic provider and query for unsold market items */
-    const provider = new ethers.providers.JsonRpcProvider();
-    const contract = new ethers.Contract(
-      marketplaceAddress,
-      NFTMarketplace.abi,
-      provider
+    const contract = getContract(
+      web3reactContext.library,
+      web3reactContext.account
     );
     const data = await contract.fetchMarketItems();
 
@@ -76,17 +73,10 @@ export default function Marketplace() {
     price: { toString: () => string };
     tokenId: any;
   }) {
-    /* needs the user to sign the transaction, so will use Web3Provider and sign it */
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      marketplaceAddress,
-      NFTMarketplace.abi,
-      signer
+    const contract = getContract(
+      web3reactContext.library,
+      web3reactContext.account
     );
-
     /* user will be prompted to pay the asking proces to complete the transaction */
     const price = ethers.utils.parseUnits(nft.price.toString(), "ether");
     const transaction = await contract.createMarketSale(nft.tokenId, {
@@ -105,7 +95,7 @@ export default function Marketplace() {
             <div key={i} className="border shadow rounded-xl overflow-hidden">
               <Image
                 className="rounded"
-                src={nft.image} // TODO At some point the image prop is empty so it generates an issue
+                src={nft.image}
                 alt="NFT file"
                 width={350}
                 height={257}
@@ -124,7 +114,16 @@ export default function Marketplace() {
                 </div>
               </div>
               <div className="p-4 bg-black">
-                <p className="text-2xl font-bold text-white">{nft.price} ETH</p>
+                <div className="text-2xl font-bold text-white">
+                  {nft.price}{" "}
+                  <Image
+                    src="/Polygon-Matic-Logo.svg"
+                    alt="Polygon Matic Logo"
+                    width={25}
+                    height={25}
+                  />
+                  MATIC
+                </div>
                 <button
                   className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
                   onClick={() => buyNft(nft)}

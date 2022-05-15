@@ -1,36 +1,17 @@
 import { useEffect, useState } from "react";
-import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers } from "ethers";
 import { IoMdWallet } from "react-icons/io";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Image from "next/image";
-
-let web3Modal: Web3Modal;
+import { injected } from "../helper/connectors";
+import { useWeb3React } from "@web3-react/core";
 
 interface WalletProps {
   isMobile: boolean;
 }
 
-const providerOptions = {
-  walletconnect: {
-    package: WalletConnectProvider, // required
-    options: {
-      rpc: { 137: process.env.NEXT_PUBLIC_RPC_URL }, // required
-    },
-  },
-};
-
-if (typeof window !== "undefined") {
-  web3Modal = new Web3Modal({
-    cacheProvider: false,
-    providerOptions, // required
-  });
-}
-
 export function Wallet({ isMobile }: WalletProps) {
-  const [isConnected, setIsConnected] = useState(false);
   const [hasMetamask, setHasMetamask] = useState(false);
-  // const [signer, setSigner] = useState(undefined);
+  const { active, activate, deactivate } = useWeb3React();
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -41,31 +22,45 @@ export function Wallet({ isMobile }: WalletProps) {
   async function connect() {
     if (typeof window.ethereum !== "undefined") {
       try {
-        const web3ModalProvider = await web3Modal.connect();
-        setIsConnected(true);
-        const provider = new ethers.providers.Web3Provider(web3ModalProvider);
-        // setSigner(provider.getSigner());
+        await activate(injected);
       } catch (e) {
         console.log(e);
       }
-    } else {
-      setIsConnected(false);
     }
   }
+
+  async function disconnect() {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        await deactivate();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
   return (
-    <>
+    <div>
       {isMobile ? (
         <div>
           {hasMetamask ? (
-            isConnected ? (
-              <button className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans">
-                Connected
-                {/* Add the Metamask rpofil icon here */}
-              </button>
+            active ? (
+              <div>
+                <button className="disabled:opacity-70  disabled:cursor-not-allowed mr-5 px-5 py-2 border-2 rounded-md text-base font-bold font-sans">
+                  Connected
+                  {/* Add the Metamask profil icon here */}
+                </button>
+                <button
+                  className="p-2 rounded-full border-2"
+                  onClick={disconnect}
+                >
+                  <LogoutIcon />
+                </button>
+              </div>
             ) : (
               <button
                 className="disabled:opacity-70  disabled:cursor-not-allowed"
-                onClick={() => connect()}
+                onClick={connect}
               >
                 <IoMdWallet size="34" />
               </button>
@@ -89,14 +84,22 @@ export function Wallet({ isMobile }: WalletProps) {
       ) : (
         <div className="mr-3 mt-2">
           {hasMetamask ? (
-            isConnected ? (
-              <button className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans">
-                Connected
-              </button>
+            active ? (
+              <div>
+                <button className="disabled:opacity-70  disabled:cursor-not-allowed mr-5 px-5 py-2 border-2 rounded-md text-base font-bold font-sans">
+                  Connected
+                </button>
+                <button
+                  className="p-2 rounded-full border-2"
+                  onClick={disconnect}
+                >
+                  <LogoutIcon />
+                </button>
+              </div>
             ) : (
               <button
                 className="disabled:opacity-70  disabled:cursor-not-allowed px-10 py-3 border rounded-md text-base font-bold font-sans"
-                onClick={() => connect()}
+                onClick={connect}
               >
                 Connect your wallet
               </button>
@@ -113,6 +116,6 @@ export function Wallet({ isMobile }: WalletProps) {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }

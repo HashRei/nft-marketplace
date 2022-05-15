@@ -12,17 +12,15 @@ HOW TO?
 
 import { useState } from "react";
 import { ethers } from "ethers";
+import { useWeb3React } from "@web3-react/core";
+import { getContract } from "../helper/contract";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001"); // This works check https://www.npmjs.com/package/ipfs-http-client
 
-import { marketplaceAddress } from "../../config";
-
-import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 
 interface Inputs {
   nftName: string;
@@ -44,6 +42,7 @@ export default function Minter() {
 
   const [fileUrl, setFileUrl] = useState("");
   const router = useRouter();
+  const web3reactContext = useWeb3React(); 
 
   // Function for creating and updating the file url
   async function onChange(e: any) {
@@ -97,18 +96,11 @@ export default function Minter() {
       nftPrice,
       nftFile,
     });
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
 
-    // create the item
+
+    // Create the item
     const price = ethers.utils.parseUnits(String(nftPrice), "ether");
-    let contract = new ethers.Contract(
-      marketplaceAddress, // TODO update marketplaceAddress depending on the network
-      NFTMarketplace.abi,
-      signer
-    );
+    let contract = getContract(web3reactContext.library, web3reactContext.account)
 
     let listingPrice = await contract.getListingPrice();
     listingPrice = listingPrice.toString();
@@ -154,7 +146,7 @@ export default function Minter() {
           type="number"
           placeholder="0.000"
           className="p-5 rounded"
-          {...register("nftPrice", { required: true, min: 1 })}
+          {...register("nftPrice", { required: true, min: 0.001 })}
         />
         {errors.nftPrice && <p>Price must be at least 1</p>}
 
