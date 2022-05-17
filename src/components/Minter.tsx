@@ -18,6 +18,10 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const client = ipfsHttpClient("https://ipfs.infura.io:5001"); // This works check https://www.npmjs.com/package/ipfs-http-client
 
@@ -35,6 +39,8 @@ export default function Minter() {
     formState: { errors },
   } = useForm<Inputs>({});
 
+  const { active } = useWeb3React();
+
   const onSubmit = ({ nftName, nftDescription, nftPrice, nftFile }: Inputs) => {
     listNFTForSale({ nftName, nftDescription, nftPrice, nftFile });
   };
@@ -42,6 +48,18 @@ export default function Minter() {
   const [fileUrl, setFileUrl] = useState("");
   const router = useRouter();
   const web3reactContext = useWeb3React();
+  const notify = () => {
+    toast.error("Your wallet is not connected !!!"),
+      {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      };
+  };
 
   // Function for creating and updating the file url
   async function onChange(e: any) {
@@ -113,8 +131,7 @@ export default function Minter() {
 
       router.push("/MarketplacePage"); // reroute the user to the marketplace page
     } else {
-      console.log("Please connect your metamask");
-      //TODO Add Toastify event
+      console.log("Please connect your metamask"); //TODO Add Toastify event
     }
   }
 
@@ -179,12 +196,19 @@ export default function Minter() {
             />
           </div>
         )}
-        <button
-          type="submit"
-          className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600"
-        >
-          Mint an NFT
-        </button>
+        {active ? (
+          <button
+            type="submit"
+            className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600"
+          >
+            Mint an NFT
+          </button>
+        ) : (
+          <div className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600">
+            <button onClick={notify}>Mint an NFT</button>
+            <ToastContainer />
+          </div>
+        )}
       </form>
     </div>
   );
