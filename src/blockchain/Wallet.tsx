@@ -11,7 +11,7 @@ interface WalletProps {
 
 export function Wallet({ isMobile }: WalletProps) {
   const [hasMetamask, setHasMetamask] = useState(false);
-  const { active, activate, deactivate } = useWeb3React();
+  const { active, activate, deactivate, account } = useWeb3React();
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -55,7 +55,9 @@ export function Wallet({ isMobile }: WalletProps) {
             active ? (
               <div>
                 <button className="disabled:opacity-70  disabled:cursor-not-allowed mr-5 px-5 py-2 border-2 rounded-md text-base font-bold font-sans">
-                  Connected
+                  <p>
+                    {account?.slice(0, 7)}...{account?.slice(-3)}
+                  </p>
                   {/* Add the Metamask profil icon here */}
                 </button>
                 <button
@@ -95,7 +97,9 @@ export function Wallet({ isMobile }: WalletProps) {
             active ? (
               <div>
                 <button className="disabled:opacity-70  disabled:cursor-not-allowed mr-5 px-5 py-2 border-2 rounded-md text-base font-bold font-sans">
-                  Connected
+                  <p>
+                    {account?.slice(0, 7)}...{account?.slice(-3)}
+                  </p>
                 </button>
                 <button
                   className="p-2 rounded-full border-2"
