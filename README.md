@@ -35,6 +35,29 @@ git clone https://github.com/HashRei/nft-marketplace.git
 cd nft-marketplace
 yarn
 ```
+
+2. Run
+
+```
+yarn dev
+```
+3. Add the Mumbai Network to your your wallet
+
+  Easyiest way is to go to https://chainlist.org/, select **Testnets** and write **Mumbai** in the search bar of the website
+  
+  OR
+
+  
+4. Get some Testnet Matic
+
+https://faucet.matic.network/
+
+https://testmatic.vercel.app/ (0.2 MATIC per claim)
+
+https://mumbaifaucet.com/ (1 MATIC per claim)
+
+
+
 ## Deployed version 👇
 
 #
