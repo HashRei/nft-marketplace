@@ -49,16 +49,7 @@ export default function Minter() {
   const router = useRouter();
   const web3reactContext = useWeb3React();
   const notify = () => {
-    toast.error("Your wallet is not connected !!!"),
-      {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      };
+    toast.error("Your wallet is not connected !!!")
   };
 
   // Function for creating and updating the file url
@@ -204,9 +195,22 @@ export default function Minter() {
             Mint an NFT
           </button>
         ) : (
-          <div className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600">
-            <button onClick={notify}>Mint an NFT</button>
-            <ToastContainer />
+          <div
+            onClick={notify}
+            className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600"
+          >
+            <p>Mint an NFT</p>
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={true}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </div>
         )}
       </form>
