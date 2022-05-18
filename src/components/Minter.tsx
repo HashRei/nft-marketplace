@@ -167,7 +167,7 @@ export default function Minter() {
 
         <input
           type="number"
-          placeholder="0.000"
+          placeholder="Listing price"
           className="p-5 rounded"
           {...register("nftPrice", { required: true, min: 0.001 })}
         />
