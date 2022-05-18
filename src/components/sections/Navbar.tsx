@@ -115,9 +115,11 @@ export function Navbar() {
 
 const NavbarButton = ({ text, path }: NavbarButtonProps) => {
   return (
-    <button className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600">
-      <Link href={path}>{text}</Link>
-    </button>
+    <Link href={path} passHref>
+      <div className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600">
+        {text}
+      </div>
+    </Link>
   );
 };
 
