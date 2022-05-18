@@ -46,7 +46,8 @@ yarn dev
   Easyiest way is to go to https://chainlist.org/, select **Testnets** and write **Mumbai** in the search bar of the website
   
   OR
-
+  
+<img src="public/Add_Mumbai_To_Metamask.png" width="600">
   
 4. Get some Testnet Matic
 
