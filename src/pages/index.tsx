@@ -1,14 +1,11 @@
 import type { NextPage } from "next";
-import HomePage from "../components/Marketplace";
-import MintPage from "../components/Minter";
-import MyAssets from "../components/MyAssets";
+import Carousel from "../components/Carousel";
 import { Page } from "../components/Page";
-import { Navbar } from "../components/sections/Navbar";
 
 const Home: NextPage = () => {
   return (
     <Page>
-
+      <Carousel/>
     </Page>
   );
 };

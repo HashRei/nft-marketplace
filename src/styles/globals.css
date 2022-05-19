@@ -2,3 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
+.swiper-slide {
+  text-align: center;
+  
+  /* Center slide text vertically */ 
+  align-items: center;
+}
