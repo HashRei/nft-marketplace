@@ -45,7 +45,9 @@ export function Navbar() {
             height={"40px"}
             quality={100}
           />
-          <p className="font-bold text-4xl">LooksSea</p>
+          <Link href="/" passHref>
+            <p className="font-bold text-4xl cursor-pointer">LooksSea</p>
+          </Link>
         </div>
         <div className="">
           <Paper
