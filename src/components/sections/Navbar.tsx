@@ -14,7 +14,6 @@ import { DarkModeButton } from "../utils/DarkModeButton";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -22,6 +21,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 interface NavbarButtonProps {
   text?: string;
@@ -144,14 +144,43 @@ export default function TemporaryDrawer() {
   const list = () => (
     <Box>
       <List>
-        {["My collection", "Mint and buy"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <CollectionsIcon /> : <SwapHorizIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {["Create an NFT", "Marketplace", "My collection"].map(
+          (text, index) => (
+            <ListItemButton key={text}>
+              {index === 0 && (
+                <Link href="/MinterPage" passHref>
+                  <button className="inline-flex">
+                    <ListItemIcon>
+                      <AddCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </button>
+                </Link>
+              )}
+              {index === 1 && (
+                <Link href="/MarketplacePage" passHref>
+                  <button className="inline-flex">
+                    <ListItemIcon>
+                      <SwapHorizIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </button>
+                </Link>
+              )}
+
+              {index === 2 && (
+                <Link href="/MyCollectionPage" passHref>
+                  <button className="inline-flex">
+                    <ListItemIcon>
+                      <CollectionsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </button>
+                </Link>
+              )}
+            </ListItemButton>
+          )
+        )}
       </List>
       <Divider />
       <List>
