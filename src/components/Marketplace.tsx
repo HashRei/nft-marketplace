@@ -6,30 +6,16 @@ import Image from "next/image";
 
 import { getContract } from "../helper/contract";
 import { useWeb3React } from "@web3-react/core";
+import { motion } from "framer-motion";
 
 export default function Marketplace() {
   const [nfts, setNfts] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
   const web3reactContext = useWeb3React();
-  // const [nftCreation, setNftCreation] = useState(false);
 
   useEffect(() => {
     loadNFTs();
   }, []);
-
-  // async function checkEvents() {
-  //   /* create a generic provider and query for unsold market items */
-  //   const provider = new ethers.providers.JsonRpcProvider();
-  //   const contract = new ethers.Contract(
-  //     marketplaceAddress,
-  //     NFTMarketplace.abi,
-  //     provider
-  //   );
-  //   contract.on("MarketItemCreated", () => {
-  //     setNftCreation(true);
-  //     console.log("setNftCreation(true)");
-  //   });
-  // }
 
   async function loadNFTs() {
     const contract = getContract(
@@ -88,7 +74,10 @@ export default function Marketplace() {
   if (loadingState === "loaded" && !nfts.length)
     return <h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>;
   return loadingState === "not-loaded" ? (
-    <div className="flex justify-center items-center" style={{ height: "90vh" }}>
+    <div
+      className="flex justify-center items-center"
+      style={{ height: "90vh" }}
+    >
       <button
         disabled
         type="button"
@@ -114,53 +103,65 @@ export default function Marketplace() {
       </button>
     </div>
   ) : (
-    <div className="flex justify-center">
-      <div className="px-4" style={{ maxWidth: "1600px" }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-          {nfts.map((nft, i) => (
-            <div key={i} className="border shadow rounded-xl overflow-hidden">
-              <Image
-                className="rounded"
-                src={nft.image}
-                alt="NFT file"
-                width={350}
-                height={257}
-                objectFit="cover"
-                quality={100}
-              />
-              <div className="p-4">
-                <p
-                  style={{ height: "64px" }}
-                  className="text-2xl font-semibold"
-                >
-                  {nft.name}
-                </p>
-                <div style={{ height: "70px", overflow: "hidden" }}>
-                  <p className="text-gray-400">{nft.description}</p>
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, x: 200, y: 0 },
+        enter: { opacity: 1, x: 0, y: 0 },
+        exit: { opacity: 0, x: 0, y: -100 },
+      }} // Pass the variant object into Framer Motion
+      initial="hidden" // Set the initial state to variants.hidden
+      animate="enter" // Animated state to variants.enter
+      exit="exit" // Exit state (used later) to variants.exit
+      transition={{ type: "linear", duration: 1 }} // Set the transition to linear
+    >
+      <div className="flex justify-center">
+        <div className="px-4" style={{ maxWidth: "1600px" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+            {nfts.map((nft, i) => (
+              <div key={i} className="border shadow rounded-xl overflow-hidden">
+                <Image
+                  className="rounded"
+                  src={nft.image}
+                  alt="NFT file"
+                  width={350}
+                  height={257}
+                  objectFit="cover"
+                  quality={100}
+                />
+                <div className="p-4">
+                  <p
+                    style={{ height: "64px" }}
+                    className="text-2xl font-semibold"
+                  >
+                    {nft.name}
+                  </p>
+                  <div style={{ height: "70px", overflow: "hidden" }}>
+                    <p className="text-gray-400">{nft.description}</p>
+                  </div>
+                </div>
+                <div className="p-4 bg-black">
+                  <div className="text-2xl font-bold text-white">
+                    {nft.price}{" "}
+                    <Image
+                      src="/Polygon-Matic-Logo.svg"
+                      alt="Polygon Matic Logo"
+                      width={25}
+                      height={25}
+                    />
+                    MATIC
+                  </div>
+                  <button
+                    className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
+                    onClick={() => buyNft(nft)}
+                  >
+                    Buy
+                  </button>
                 </div>
               </div>
-              <div className="p-4 bg-black">
-                <div className="text-2xl font-bold text-white">
-                  {nft.price}{" "}
-                  <Image
-                    src="/Polygon-Matic-Logo.svg"
-                    alt="Polygon Matic Logo"
-                    width={25}
-                    height={25}
-                  />
-                  MATIC
-                </div>
-                <button
-                  className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
-                  onClick={() => buyNft(nft)}
-                >
-                  Buy
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

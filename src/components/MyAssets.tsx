@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function MyAssets() {
   const [nfts, setNfts] = useState<any[]>([]);
@@ -14,7 +15,7 @@ export default function MyAssets() {
 
   useEffect(() => {
     loadNFTs();
-  }, []);
+  }, [nfts]);
 
   async function loadNFTs() {
     const marketplaceContract = getContract(
@@ -54,17 +55,11 @@ export default function MyAssets() {
     console.log("nft:", nft);
     router.push(`/resell-nft?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`);
   }
-  if (loadingState == "loaded" && !nfts.length)
-    return (
-      <h1
-        className="py-10 px-20 text-3xl flex justify-center items-center"
-        style={{ height: "90vh" }}
-      >
-        No NFTs owned
-      </h1>
-    );
   return loadingState === "not-loaded" ? (
-    <div className="flex justify-center items-center" style={{ height: "90vh" }}>
+    <div
+      className="flex justify-center items-center"
+      style={{ height: "90vh" }}
+    >
       <button
         disabled
         type="button"
@@ -89,41 +84,63 @@ export default function MyAssets() {
         Loading...
       </button>
     </div>
+  ) : !nfts.length ? (
+    <h1
+      className="py-10 px-20 text-3xl flex justify-center items-center"
+      style={{ height: "90vh" }}
+    >
+      <>
+        {console.log("nfts.length", nfts.length)}
+        No NFTs owned
+      </>
+    </h1>
   ) : (
-    <div className="flex justify-center p-4">
-      <div className="grid grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-4 gap-4 pt-4">
-        {nfts.map((nft: any, i) => (
-          <div key={i} className="border shadow rounded-xl overflow-hidden">
-            <Image
-              className="rounded"
-              src={nft.image}
-              alt="NFT file"
-              width={350}
-              height={257}
-              objectFit="cover"
-              quality={100}
-            />
-            <div className="p-4 bg-black">
-              <div className="flex gap-2 text-2xl font-bold text-white">
-                Price - {nft.price}{" "}
-                <Image
-                  src="/Polygon-Matic-Logo.svg"
-                  alt="Polygon Matic Logo"
-                  width={25}
-                  height={25}
-                />
-                MATIC
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, x: -200, y: 0 },
+        enter: { opacity: 1, x: 0, y: 0 },
+        exit: { opacity: 0, x: 0, y: -100 },
+      }} // Pass the variant object into Framer Motion
+      initial="hidden" // Set the initial state to variants.hidden
+      animate="enter" // Animated state to variants.enter
+      exit="exit" // Exit state (used later) to variants.exit
+      transition={{ type: "linear", duration: 1 }} // Set the transition to linear
+    >
+      <div className="flex justify-center p-4">
+        <div className="grid grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-4 gap-4 pt-4">
+          {nfts.map((nft: any, i) => (
+            <div key={i} className="border shadow rounded-xl overflow-hidden">
+              <Image
+                className="rounded"
+                src={nft.image}
+                alt="NFT file"
+                width={350}
+                height={257}
+                objectFit="cover"
+                quality={100}
+              />
+              <div className="p-4 bg-black">
+                <div className="flex gap-2 text-2xl font-bold text-white">
+                  Price - {nft.price}{" "}
+                  <Image
+                    src="/Polygon-Matic-Logo.svg"
+                    alt="Polygon Matic Logo"
+                    width={25}
+                    height={25}
+                  />
+                  MATIC
+                </div>
+                <button
+                  className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
+                  onClick={() => listNFT(nft)}
+                >
+                  List
+                </button>
               </div>
-              <button
-                className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
-                onClick={() => listNFT(nft)}
-              >
-                List
-              </button>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

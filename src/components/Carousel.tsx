@@ -15,6 +15,7 @@ import { ethers } from "ethers";
 import axios from "axios";
 import { getContract } from "../helper/contract";
 import { useWeb3React } from "@web3-react/core";
+import { motion } from "framer-motion";
 
 export default function Carousel() {
   useEffect(() => {
@@ -65,7 +66,10 @@ export default function Carousel() {
   }
 
   return loadingState === "not-loaded" ? (
-    <div className="flex justify-center items-center" style={{ height: "90vh" }}>
+    <div
+      className="flex justify-center items-center"
+      style={{ height: "90vh" }}
+    >
       <button
         disabled
         type="button"
@@ -91,51 +95,53 @@ export default function Carousel() {
       </button>
     </div>
   ) : (
-    <div className="flex items-center h-screen w-screen">
-      <Swiper
-        // install Swiper modules
-        modules={[Navigation, Pagination, Mousewheel]}
-        slidesPerView={1}
-        mousewheel
-        pagination={{ clickable: true }}
-      >
-        {nfts.map((nft, i) => (
-          <div key={i} className="border rounded-xl">
-            <SwiperSlide>
-              <Image
-                className="rounded"
-                src={nft.image}
-                alt="NFT file"
-                width={350}
-                height={257}
-                objectFit="cover"
-                quality={100}
-              />
-              <div className="p-8">
-                <p
-                  style={{ height: "64px" }}
-                  className="text-2xl font-semibold"
-                >
-                  {nft.name}
-                </p>
-                <div style={{ height: "70px", overflow: "hidden" }}>
-                  <p className="text-gray-400">{nft.description}</p>
+    <motion.div animate={{ scale: [0.5, 1] }} transition={{ duration: 1 }}>
+      <div className="flex items-center h-screen w-screen">
+        <Swiper
+          // install Swiper modules
+          modules={[Navigation, Pagination, Mousewheel]}
+          slidesPerView={1}
+          mousewheel
+          pagination={{ clickable: true }}
+        >
+          {nfts.map((nft, i) => (
+            <div key={i} className="border rounded-xl">
+              <SwiperSlide>
+                <Image
+                  className="rounded"
+                  src={nft.image}
+                  alt="NFT file"
+                  width={350}
+                  height={257}
+                  objectFit="cover"
+                  quality={100}
+                />
+                <div className="p-8">
+                  <p
+                    style={{ height: "64px" }}
+                    className="text-2xl font-semibold"
+                  >
+                    {nft.name}
+                  </p>
+                  <div style={{ height: "70px", overflow: "hidden" }}>
+                    <p className="text-gray-400">{nft.description}</p>
+                  </div>
+                  <div className="text-2xl font-bold ">
+                    {nft.price}{" "}
+                    <Image
+                      src="/Polygon-Matic-Logo.svg"
+                      alt="Polygon Matic Logo"
+                      width={25}
+                      height={25}
+                    />
+                    MATIC
+                  </div>
                 </div>
-                <div className="text-2xl font-bold ">
-                  {nft.price}{" "}
-                  <Image
-                    src="/Polygon-Matic-Logo.svg"
-                    alt="Polygon Matic Logo"
-                    width={25}
-                    height={25}
-                  />
-                  MATIC
-                </div>
-              </div>
-            </SwiperSlide>
-          </div>
-        ))}
-      </Swiper>
-    </div>
+              </SwiperSlide>
+            </div>
+          ))}
+        </Swiper>
+      </div>
+    </motion.div>
   );
 }
