@@ -5,7 +5,7 @@ import { Page } from "../components/Page";
 const Home: NextPage = () => {
   return (
     <Page>
-      <Carousel/>
+      <Carousel />
     </Page>
   );
 };

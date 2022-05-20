@@ -4,7 +4,7 @@ import { Page } from "../components/Page";
 export default function MyCollectionPage() {
   return (
     <Page>
-        <MyAssets />
+      <MyAssets />
     </Page>
   );
 }
