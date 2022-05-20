@@ -88,7 +88,7 @@ export default function Marketplace() {
   if (loadingState === "loaded" && !nfts.length)
     return <h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>;
   return loadingState === "not-loaded" ? (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center" style={{ height: "90vh" }}>
       <button
         disabled
         type="button"

@@ -127,7 +127,7 @@ export default function Minter() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center" style={{height: "90vh"}}>
       <form
         className="mt-16 flex flex-col space-y-3 tablet:w-1/2 p-4 desktop:-mt-10 bg-slate-300 rounded-lg bg-gradient-to-tr from-violet-500 to-fuchsia-500 "
         onSubmit={handleSubmit(onSubmit)}

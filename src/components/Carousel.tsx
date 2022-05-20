@@ -65,7 +65,7 @@ export default function Carousel() {
   }
 
   return loadingState === "not-loaded" ? (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center" style={{ height: "90vh" }}>
       <button
         disabled
         type="button"
