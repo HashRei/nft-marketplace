@@ -2,14 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Wallet } from "../../blockchain/Wallet";
 import * as React from "react";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
 import { DarkModeButton } from "../utils/DarkModeButton";
+import { motion } from "framer-motion";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -36,7 +33,11 @@ export function Navbar() {
       {/* DESKTOP NAVBAR */}
 
       <div className=" hidden desktop:flex flex-col w-full items-center space-y-3 desktop:flex-row justify-between">
-        <div className="flex p-2 space-x-3">
+        <motion.div
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.9 }}
+          className="flex p-2 space-x-3"
+        >
           {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
           <Image
             src="/Logo_LooksSea.png"
@@ -48,27 +49,33 @@ export function Navbar() {
           <Link href="/" passHref>
             <p className="font-bold text-4xl cursor-pointer">LooksSea</p>
           </Link>
-        </div>
+        </motion.div>
         <div className="">
-          <Paper
-            component="form"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 400,
-            }}
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            className="inline-flex"
+            onClick={() =>
+              window.open(
+                "https://github.com/HashRei/nft-marketplace",
+                "_blank"
+              )
+            }
           >
-            <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search LooksSea"
-              inputProps={{ "aria-label": "search looksSea" }}
-            />
-          </Paper>
+            <GitHubIcon className="mr-4" />
+            GitHub
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            className="inline-flex ml-8"
+            onClick={() =>
+              window.open("https://twitter.com/HashRei_", "_blank")
+            }
+          >
+            <TwitterIcon className="mr-4" />
+            Twitter
+          </motion.button>
         </div>
 
         <NavbarButton text="Create an NFT" path="/MinterPage" />
@@ -118,9 +125,13 @@ export function Navbar() {
 const NavbarButton = ({ text, path }: NavbarButtonProps) => {
   return (
     <Link href={path} passHref>
-      <div className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600">
+      <motion.div
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="items-center py-2 px-6 mx-0 mt-2 mb-0 font-semibold text-center normal-case whitespace-nowrap bg-none rounded-full border-2 border-solid cursor-pointer box-border border-stone-500 bg-zinc-800 text-stone-200 hover:border-neutral-600"
+      >
         {text}
-      </div>
+      </motion.div>
     </Link>
   );
 };

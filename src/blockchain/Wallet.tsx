@@ -4,6 +4,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Image from "next/image";
 import { injected } from "../helper/connectors";
 import { useWeb3React } from "@web3-react/core";
+import { motion } from "framer-motion";
 
 interface WalletProps {
   isMobile: boolean;
@@ -101,12 +102,14 @@ export function Wallet({ isMobile }: WalletProps) {
                     {account?.slice(0, 7)}...{account?.slice(-3)}
                   </p>
                 </button>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   className="p-2 rounded-full border-2"
                   onClick={disconnect}
                 >
                   <LogoutIcon />
-                </button>
+                </motion.button>
               </div>
             ) : (
               <button
