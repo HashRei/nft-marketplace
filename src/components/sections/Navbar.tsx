@@ -25,6 +25,12 @@ interface NavbarButtonProps {
   path: string;
 }
 
+interface NavbarSocialButtonProps {
+  text: string;
+  path: string;
+  icon?: any;
+}
+
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -38,7 +44,6 @@ export function Navbar() {
           whileTap={{ scale: 0.9 }}
           className="flex p-2 space-x-3"
         >
-          {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
           <Image
             src="/Logo_LooksSea.png"
             alt="LooksSea logo"
@@ -50,32 +55,18 @@ export function Navbar() {
             <p className="font-bold text-4xl cursor-pointer">LooksSea</p>
           </Link>
         </motion.div>
-        <div className="">
-          <motion.button
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            className="inline-flex"
-            onClick={() =>
-              window.open(
-                "https://github.com/HashRei/nft-marketplace",
-                "_blank"
-              )
-            }
-          >
-            <GitHubIcon className="mr-4" />
-            GitHub
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            className="inline-flex ml-8"
-            onClick={() =>
-              window.open("https://twitter.com/HashRei_", "_blank")
-            }
-          >
-            <TwitterIcon className="mr-4" />
-            Twitter
-          </motion.button>
+        <div className=" space-x-6">
+          <NavbarSocialButton
+            text="GitHub"
+            path="https://github.com/HashRei/nft-marketplace"
+            icon={<GitHubIcon className="mr-4" />}
+          />
+
+          <NavbarSocialButton
+            text="Twitter"
+            path="https://twitter.com/HashRei_"
+            icon={<TwitterIcon className="mr-4" />}
+          />
         </div>
 
         <NavbarButton text="Create an NFT" path="/MinterPage" />
@@ -121,6 +112,22 @@ export function Navbar() {
     </div>
   );
 }
+
+const NavbarSocialButton = ({ text, path, icon }: NavbarSocialButtonProps) => {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.2 }}
+      whileTap={{ scale: 0.9 }}
+      className="inline-flex"
+      onClick={() => window.open(path, "_blank")}
+    >
+      <>
+        {icon}
+        {text}
+      </>
+    </motion.button>
+  );
+};
 
 const NavbarButton = ({ text, path }: NavbarButtonProps) => {
   return (
