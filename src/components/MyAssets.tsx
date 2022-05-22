@@ -51,10 +51,29 @@ export default function MyAssets() {
     setNfts(items);
     setLoadingState("loaded");
   }
-  function listNFT(nft: any) {
-    console.log("nft:", nft);
-    router.push(`/resell-nft?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`);
+
+  async function listNFTForSale(nft: any) {
+    if (nft !== undefined) {
+      const marketplaceContract = getContract(
+        web3reactContext.library,
+        web3reactContext.account
+      );
+
+      const priceFormatted = ethers.utils.parseUnits(nft.price, "ether");
+
+      let listingPrice = await marketplaceContract.getListingPrice();
+      listingPrice = listingPrice.toString();
+      let transaction = await marketplaceContract.resellToken(
+        nft.tokenId,
+        priceFormatted,
+        { value: listingPrice }
+      );
+      await transaction.wait();
+
+      router.push("/MarketplacePage");
+    } else return;
   }
+
   return loadingState === "not-loaded" ? (
     <div
       className="flex justify-center items-center"
@@ -132,9 +151,9 @@ export default function MyAssets() {
                 </div>
                 <button
                   className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded"
-                  onClick={() => listNFT(nft)}
+                  onClick={() => listNFTForSale(nft)}
                 >
-                  List
+                  List for sale
                 </button>
               </div>
             </div>
