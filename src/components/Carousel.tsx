@@ -113,7 +113,6 @@ export default function Carousel() {
                   alt="NFT file"
                   width={350}
                   height={257}
-                  objectFit="cover"
                   quality={100}
                 />
                 <div className="p-8">

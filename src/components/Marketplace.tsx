@@ -125,7 +125,6 @@ export default function Marketplace() {
                   alt="NFT file"
                   width={350}
                   height={257}
-                  objectFit="cover"
                   quality={100}
                 />
                 <div className="p-4">
