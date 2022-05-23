@@ -108,10 +108,7 @@ export default function MyAssets() {
       className="py-10 px-20 text-3xl flex justify-center items-center"
       style={{ height: "90vh" }}
     >
-      <>
-        {console.log("nfts.length", nfts.length)}
-        No NFTs owned
-      </>
+      No NFTs owned
     </h1>
   ) : (
     <motion.div

@@ -83,7 +83,6 @@ export function Navbar() {
       <div className=" flex flex-col w-full  justify-between desktop:hidden ">
         <div className="inline-flex tablet:flex justify-around w-full">
           <div className="flex p-2 space-x-3">
-            {/* The Image below generates "Warning: Prop `style` did not match" an erro in the console */}
             <Image
               src="/Logo_LooksSea.png"
               alt="LooksSea logo"

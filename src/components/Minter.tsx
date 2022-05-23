@@ -189,7 +189,7 @@ export default function Minter() {
                 alt="NFT file"
                 width={350}
                 height={257}
-                objectFit="cover"
+                objectFit="scale-down"
                 quality={100}
               />
             </div>

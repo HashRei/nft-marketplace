@@ -1,5 +1,5 @@
 import NFTMarketplace from "../../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
-import { marketplaceAddress } from "../../config";
+import { marketplaceAddress } from "../../const";
 import { ethers } from "ethers";
 
 export const getContract = (library: { getSigner: (arg0: any) => { (): any; new(): any; connectUnchecked: { (): any; new(): any; }; }; }, account: any) => {
@@ -12,6 +12,6 @@ export const getContract = (library: { getSigner: (arg0: any) => { (): any; new(
 		 signer = library.getSigner(account).connectUnchecked();
 	  }
 	
-	var contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer);
+	let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer);
 	return contract;
 };
