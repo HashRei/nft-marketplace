@@ -1,6 +1,7 @@
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
-import { INFURA_ID } from "../../const";
+
+const INFURA_ID = process.env.INFURA_ID
 
 const RPC_URLS = {
 	137: `https://polygon-mainnet.infura.io/v3/${INFURA_ID}`,
