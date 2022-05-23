@@ -14,7 +14,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { getContract } from "../helper/contract";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+import { create as ipfsHttpClient, Options } from "ipfs-http-client";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -24,7 +24,8 @@ import { motion } from "framer-motion";
 
 import "react-toastify/dist/ReactToastify.css";
 
-const client = ipfsHttpClient("https://ipfs.infura.io:5001"); // This works check https://www.npmjs.com/package/ipfs-http-client
+// "https://ipfs.infura.io:5001"
+const client = ipfsHttpClient({ host: 'ipfs.infura.io', port: 5001 , protocol: 'https' }); // This works check https://www.npmjs.com/package/ipfs-http-client
 
 interface Inputs {
   nftName: string;
@@ -143,7 +144,7 @@ export default function Minter() {
             className="p-5 rounded"
             {...register("nftName", {
               required: true,
-              maxLength: 20,
+              maxLength: 50,
             })}
           />
           {errors?.nftName?.type === "required" && (
