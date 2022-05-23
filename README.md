@@ -60,7 +60,7 @@ https://mumbaifaucet.com/ (1 MATIC per claim)
 
 
 ## Deployed version 👇
-
+https://nft-marketplace-n4yfh2bim-hashrei.vercel.app/
 #
 
 📫 How to contact me: 
