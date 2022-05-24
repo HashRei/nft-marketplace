@@ -1,9 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, Contract, ContractFactory } from "ethers";
+import { NFTMarketplace } from "../typechain-types";
 
-let NFTMarketplace: ContractFactory;
-let nftMarketplace: Contract;
+let NFTMarketplace;
+let nftMarketplace: NFTMarketplace;
 let listingPrice: any;
 let auctionPrice: BigNumber;
 
@@ -89,6 +90,32 @@ describe("NFTMarket", function () {
     expect(await nftMarketplace.fetchMarketItems()).to.not.equal(token);
     expect(await nftMarketplace.fetchMarketItems()).to.not.equal(
       tokenSecondState
+    );
+  });
+
+  it.only("Should burn a token", async function () {
+    await nftMarketplace.createToken(
+      "https://www.mytokenlocation.com", // Uniform Resource Identifier (URI) may point to JSON file that conforms to the ERC721 but not here
+      auctionPrice,
+      { value: listingPrice }
+    );
+
+    const previousBalance = await nftMarketplace.balanceOf(nftMarketplace.address);
+
+    console.log("BEFORE", await nftMarketplace.fetchMarketItems())
+
+    await nftMarketplace.burnToken(ethers.constants.One);
+
+    console.log("AFTER",await nftMarketplace.fetchMarketItems())
+    console.log("AFTER idToMarketItem",await nftMarketplace.idToMarketItem(1))
+  
+
+    // Checks
+    expect(previousBalance).to.equal(
+      ethers.constants.One
+    );
+    expect(await nftMarketplace.balanceOf(nftMarketplace.address)).to.equal(
+      ethers.constants.Zero
     );
   });
 });

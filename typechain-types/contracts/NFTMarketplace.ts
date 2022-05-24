@@ -55,6 +55,7 @@ export interface NFTMarketplaceInterface extends utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "burnToken(uint256)": FunctionFragment;
     "createMarketSale(uint256)": FunctionFragment;
     "createToken(string,uint256)": FunctionFragment;
     "fetchItemsListed()": FunctionFragment;
@@ -80,6 +81,7 @@ export interface NFTMarketplaceInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "approve"
       | "balanceOf"
+      | "burnToken"
       | "createMarketSale"
       | "createToken"
       | "fetchItemsListed"
@@ -106,6 +108,10 @@ export interface NFTMarketplaceInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "burnToken",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "createMarketSale",
     values: [BigNumberish]
@@ -179,6 +185,7 @@ export interface NFTMarketplaceInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnToken", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createMarketSale",
     data: BytesLike
@@ -343,6 +350,11 @@ export interface NFTMarketplace extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    burnToken(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     createMarketSale(
       _tokenId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
@@ -446,6 +458,11 @@ export interface NFTMarketplace extends BaseContract {
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  burnToken(
+    _tokenId: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   createMarketSale(
     _tokenId: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
@@ -542,6 +559,8 @@ export interface NFTMarketplace extends BaseContract {
     ): Promise<void>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    burnToken(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     createMarketSale(
       _tokenId: BigNumberish,
@@ -691,6 +710,11 @@ export interface NFTMarketplace extends BaseContract {
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    burnToken(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     createMarketSale(
       _tokenId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
@@ -790,6 +814,11 @@ export interface NFTMarketplace extends BaseContract {
     balanceOf(
       owner: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    burnToken(
+      _tokenId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     createMarketSale(

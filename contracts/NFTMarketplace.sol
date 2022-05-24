@@ -57,6 +57,27 @@ contract NFTMarketplace is ERC721URIStorage {
         return listingPrice;
     }
 
+    // Burn a token and delist it for the marketplace
+    function burnToken(uint256 _tokenId) public payable {
+
+        // Burn a the original NFT token 
+        idToMarketItem[_tokenId].owner = payable(address(0)); // Set new owner
+        idToMarketItem[_tokenId].sold = true;
+        idToMarketItem[_tokenId].seller = payable(msg.sender);
+        itemsSold.increment();
+        _burn(_tokenId); // Transfer token to address(0), the new owner of it
+        payable(owner).transfer(listingPrice);
+
+        // Add a dummy to avoid geting issues
+        idToMarketItem[_tokenId] = MarketItem(
+            _tokenId,
+            payable(address(0)),
+            payable(address(0)), // This contract will be the owner
+            0,
+            true
+        );
+    }
+
     // Mints a token and lists it in the marketplace
     function createToken(string memory _tokenURI, uint256 _price)
         public
