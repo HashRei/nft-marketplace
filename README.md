@@ -2,6 +2,13 @@ Made by <a href="https://github.com/HashRei">@HashRei</a>
 
 # Getting Started
 
+## Description
+
+Ethereum based NFT marketplace where you can mint, buy and sell NFTs.
+
+Explanation video => 
+<a href="https://www.youtube.com/watch?v=_QfKX-NoHhE&t=22s" target="_blank"> LooksSea - NFT Marketplace | HashRei</a>  📽
+
 ## Requirements
 
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -20,11 +27,14 @@ Made by <a href="https://github.com/HashRei">@HashRei</a>
 - A Testnet Mumbai project [Alchemy URL](https://alchemy.com/?a=673c802981)
 
 ### Build with...
+  ![Ethereum](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white)
+  ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
+   <b>Hardhat</b>👷‍♂️
   ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
   ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
   ![Material UI](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)
-  and Hardhat.
+
 
 ## Quickstart
 
