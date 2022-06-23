@@ -16,6 +16,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "hardhat.config.js", "src/components/MintPage.js", "./typechain-types"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./hardhat.config.ts", "src/components/MintPage.js", "./typechain-types"],
   "exclude": ["node_modules"]
 }
