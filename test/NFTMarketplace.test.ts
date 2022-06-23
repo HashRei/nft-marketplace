@@ -102,12 +102,9 @@ describe("NFTMarket", function () {
 
     const previousBalance = await nftMarketplace.balanceOf(nftMarketplace.address);
 
-    console.log("BEFORE", await nftMarketplace.fetchMarketItems())
 
     await nftMarketplace.burnToken(ethers.constants.One);
 
-    console.log("AFTER",await nftMarketplace.fetchMarketItems())
-    console.log("AFTER idToMarketItem",await nftMarketplace.idToMarketItem(1))
   
 
     // Checks
