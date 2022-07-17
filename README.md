@@ -81,5 +81,8 @@ https://nft-marketplace-hashrei.vercel.app/
 <a href="https://twitter.com/HashRei_" target="_blank">
   ![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)
 </a>
+<a href="https://linktr.ee/silvan_reigue.hashrei" target="_blank">
+  ![Linktree](https://img.shields.io/badge/linktree-39E09B?style=for-the-badge&logo=linktree&logoColor=white)
+</a>
 
 Made by <a href="https://github.com/HashRei">@HashRei</a>
