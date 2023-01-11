@@ -16,6 +16,7 @@ import axios from "axios";
 import { getContract } from "../helper/contract";
 import { useWeb3React } from "@web3-react/core";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Carousel() {
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function Carousel() {
 
   return loadingState === "not-loaded" ? (
     <div
-      className="flex justify-center items-center"
+      className="flex flex-col justify-center items-center space-y-3"
       style={{ height: "90vh" }}
     >
       <button
@@ -93,6 +94,18 @@ export default function Carousel() {
         </svg>
         Loading...
       </button>
+      <p>
+        Sorry😞, but the marketplace is currently not visible due to a problem
+        with the Infura node.
+      </p>
+      <p>
+        To see the Marketplace at work head to{" "}
+        <Link href="https://www.youtube.com/watch?v=_QfKX-NoHhE">
+          <a className=" underline text-blue-600 font-semibold">
+            YouTube, I have a video there that shows it
+          </a>
+        </Link>
+      </p>
     </div>
   ) : (
     <motion.div animate={{ scale: [0.5, 1] }} transition={{ duration: 1 }}>
